@@ -8,6 +8,10 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {SignUpPage} from "../pages/sign-up/sign-up";
 import {AnimePage} from "../pages/anime/anime";
+import {AngularFireModule} from "angularfire2";
+import {FIREBASE_CONFIG} from "./app.firebase.config";
+import {AngularFireAuthModule} from "angularfire2/auth"
+
 
 @NgModule({
   declarations: [
@@ -19,7 +23,9 @@ import {AnimePage} from "../pages/anime/anime";
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+      AngularFireModule.initializeApp(FIREBASE_CONFIG),
+      AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, UrlSerializer} from 'ionic-angular';
 import {AnimePage} from "../anime/anime";
-
+import {User} from "../../models/user"
+import {AngularFireAuth} from "angularfire2/auth"
 
 @IonicPage()
 @Component({
@@ -10,18 +11,23 @@ import {AnimePage} from "../anime/anime";
 })
 export class SignUpPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    user ={} as User;
+
+  constructor( private afAuth: AngularFireAuth,public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignUpPage');
   }
 
-    pushPageAnime(){
-        // push another page on to the navigation stack
-        // causing the nav controller to transition to the new page
-        // optional data can also be passed to the pushed page.
-        this.navCtrl.push(AnimePage);
+  async signUp(user:User){
+    try {
+      const result = await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
+
+    }catch(e){
+      console.error(e)
     }
+    this.navCtrl.setRoot(AnimePage);
+ }
 
 }

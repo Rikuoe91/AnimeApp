@@ -24,15 +24,17 @@
     <ion-list>
 
         <ion-item>
-            <ion-input type="text" placeholder="Username"></ion-input>
+            <ion-label floating>Email Adress</ion-label>
+            <ion-input type="text"  [(ngModel)]="user.email"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-input type="password" placeholder="Password"></ion-input>
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" [(ngModel)]="user.password"></ion-input>
         </ion-item>
 
     </ion-list>
-    <ion-buttons align="center" color="dark" (click)="pushPageAnime()">
+    <ion-buttons align="center" color="dark" (click)="login()">
         <button>Sign In</button>
     </ion-buttons>
 </ion-content>
