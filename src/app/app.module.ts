@@ -11,6 +11,7 @@ import {AnimePage} from "../pages/anime/anime";
 import {AngularFireModule} from "angularfire2";
 import {FIREBASE_CONFIG} from "./app.firebase.config";
 import {AngularFireAuthModule} from "angularfire2/auth"
+import {WelcomePage} from "../pages/welcome/welcome";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {AngularFireAuthModule} from "angularfire2/auth"
     MyApp,
     HomePage,
       SignUpPage,
-      AnimePage
+      AnimePage,
+      WelcomePage
 
   ],
   imports: [
@@ -32,7 +34,8 @@ import {AngularFireAuthModule} from "angularfire2/auth"
     MyApp,
     HomePage,
       SignUpPage,
-      AnimePage
+      AnimePage,
+      WelcomePage
   ],
   providers: [
     StatusBar,

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import {AngularFireAuth} from "angularfire2/auth"
+import {User} from "firebase/app";
+import {WelcomePage} from "../welcome/welcome";
 
 @IonicPage()
 @Component({
@@ -9,27 +11,15 @@ import {AngularFireAuth} from "angularfire2/auth"
 })
 export class AnimePage {
 
-
+    user ={} as User;
 
   constructor(private afAuth:AngularFireAuth, private toast:ToastController,
       public navCtrl: NavController, public navParams: NavParams) {
   }
 
-/*  ionViewDidLoad() {
-    this.afAuth.auth.authState.subscribe(data => {
-        if ( data && data.email && data.uid){
-            this.toast.create({
-                message: 'Welcome to AnimeAPP, ${data.email}',
-                duration: 6000
-            }).present();
-      }else{
-            this.toast.create({
-                message: 'could not find authentication details',
-                duration: 6000
-            }).present();
-        }
-      })
-  }*/
-
+    SignOut(){
+        this.afAuth.auth.signOut()
+        this.navCtrl.setRoot(WelcomePage);
+    }
 
 }

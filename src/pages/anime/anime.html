@@ -4,10 +4,11 @@
       Anime App
     </ion-title>
     <ion-title align="center" >
-      Welcome Sagemon
+      Welcome {{user.email}}
     </ion-title>
       <ion-item color="dark">
         <ion-icon ios="ios-menu" md="md-menu" left color="light" right padding="25px"></ion-icon>
+        <ion-icon ios="ios-log-out" md="md-log-out" left color="light" right padding="25px" (click)="SignOut()"></ion-icon>
       </ion-item>
     <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
 
