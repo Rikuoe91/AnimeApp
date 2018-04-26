@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import {AngularFireAuth} from "angularfire2/auth"
-import {User} from "firebase/app";
 import {WelcomePage} from "../welcome/welcome";
+import { AuthProvider } from '../../providers/auth/auth';
 
 @IonicPage()
 @Component({
@@ -11,15 +10,50 @@ import {WelcomePage} from "../welcome/welcome";
 })
 export class AnimePage {
 
-    user ={} as User;
+    user:any;
+    videos= new Array();
+    newVideos:any;
+    user_name:any;
+    searchTerm: string = '';
 
-  constructor(private afAuth:AngularFireAuth, private toast:ToastController,
+
+  constructor(public authProvider: AuthProvider, private toast:ToastController,
       public navCtrl: NavController, public navParams: NavParams) {
+       this.user = this.authProvider.checkUser();
+       this.user_name= this.user.displayName;
+       this.videos=this.authProvider.videoArray;
+       this.authProvider.getAllVideos().then(videos =>{
+          // for (var key in videos){
+          //     this.videos.push(key);
+          // }
+          // console.log(this.videos);
+          //  this.setFilteredItems();
+           this.videos=videos
+      });
+
+
   }
 
-    SignOut(){
-        this.afAuth.auth.signOut()
-        this.navCtrl.setRoot(WelcomePage);
+
+    setFilteredItems() {
+
+        this.newVideos = this.filterItems(this.searchTerm);
+
+    }
+
+    logOutUser(): void {
+        this.authProvider.logoutUser()
+            .then( authData => {
+                this.navCtrl.setRoot(WelcomePage);
+            })
+    }
+
+    filterItems(searchTerm){
+        return this.videos.filter((video) => {
+            return video.title.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+        });
+
+
     }
 
 }

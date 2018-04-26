@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {AnimePage} from "../anime/anime";
 import {User} from "../../models/user";
-import {AngularFireAuth} from "angularfire2/auth"
+import { AuthProvider } from '../../providers/auth/auth';
 
 @Component({
   selector: 'page-home',
@@ -13,27 +13,24 @@ export class HomePage {
     user ={} as User;
 
 
-  constructor( private afAuth:AngularFireAuth, public navCtrl: NavController, ) {
+  constructor( public authProvider: AuthProvider, public navCtrl: NavController, ) {
 
   }
 
-    async login(){
+    loginUser(): void {
+        this.authProvider.loginUser(this.user.email,
+            this.user.password)
+            .then( authData => {
 
-        console.log(this.user);
+                this.authProvider.user=authData;
+                this.authProvider.getUserInfo(authData.uid).then(userData=>{
 
-        try {
-           const result = this.afAuth.auth.signInWithEmailAndPassword(this.user.email,this.user.password);
-            console.log(result);
-
-            if(result){
-                this.navCtrl.setRoot(AnimePage);
-            }
-
-        }catch(e){
-            console.error(e);
-        }
-
+                    this.authProvider.username=userData;
+                    this.navCtrl.setRoot(AnimePage);
+                });
+            })
     }
+
 
 
 }
